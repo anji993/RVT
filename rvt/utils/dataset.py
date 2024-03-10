@@ -24,8 +24,8 @@ from rlbench.backend.observation import Observation
 from rlbench.demo import Demo
 
 from rvt.utils.peract_utils import LOW_DIM_SIZE, IMAGE_SIZE, CAMERAS
-from rvt.libs.peract.helpers.demo_loading_utils import keypoint_discovery
-from rvt.libs.peract.helpers.utils import extract_obs
+from peract_helpers.demo_loading_utils import keypoint_discovery
+from peract_helpers.utils import extract_obs
 
 
 def create_replay(

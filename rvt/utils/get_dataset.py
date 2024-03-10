@@ -8,7 +8,7 @@ import shutil
 import torch
 import clip
 
-from rvt.libs.peract.helpers.utils import extract_obs
+from peract_helpers.utils import extract_obs
 from rvt.utils.rvt_utils import ForkedPdb
 from rvt.utils.dataset import create_replay, fill_replay
 from rvt.utils.peract_utils import (
