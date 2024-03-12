@@ -6,7 +6,7 @@ import torch
 from omegaconf import OmegaConf
 
 from rvt.models.peract_official import create_agent_our
-from peract_colab.arm.utils import stack_on_channel
+from peract_colab.arm.utils import stack_on_channel, stack_on_channel2
 from torch.optim.lr_scheduler import CosineAnnealingLR
 from rvt.utils.lr_sched_utils import GradualWarmupScheduler
 
@@ -25,7 +25,6 @@ IMAGE_SIZE = 128
 VOXEL_SIZES = [100]  # 100x100x100 voxels
 LOW_DIM_SIZE = 4  # {left_finger_joint, right_finger_joint, gripper_open, timestep}
 
-DATA_FOLDER = "data"
 EPISODE_FOLDER = "episode%d"
 VARIATION_DESCRIPTIONS_PKL = "variation_descriptions.pkl"  # the pkl file that contains language goals for each demonstration
 DEMO_AUGMENTATION_EVERY_N = 10  # sample n-th frame in demo
@@ -43,6 +42,21 @@ def _preprocess_inputs(replay_sample, cameras):
     for n in cameras:
         rgb = stack_on_channel(replay_sample["%s_rgb" % n])
         pcd = stack_on_channel(replay_sample["%s_point_cloud" % n])
+
+        rgb = _norm_rgb(rgb)
+
+        obs.append(
+            [rgb, pcd]
+        )  # obs contains both rgb and pointcloud (used in ARM for other baselines)
+        pcds.append(pcd)  # only pointcloud
+    return obs, pcds
+
+
+def _preprocess_inputs2(replay_sample, cameras):
+    obs, pcds = [], []
+    for n in cameras:
+        rgb = stack_on_channel2(replay_sample["%s_rgb" % n])
+        pcd = stack_on_channel2(replay_sample["%s_point_cloud" % n])
 
         rgb = _norm_rgb(rgb)
 

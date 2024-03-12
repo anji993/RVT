@@ -10,6 +10,7 @@ import argparse
 import sys
 import signal
 from datetime import datetime
+import numpy as np
 
 import torch
 from torch.utils.tensorboard import SummaryWriter
@@ -106,7 +107,10 @@ class TensorboardManager:
                 else:
                     assert False
             else:
-                self.writer.add_scalar("%s_%s" % (split, k), v, step)
+                if isinstance(v, list):
+                    self.writer.add_histogram(k, np.array(v), step)
+                else:
+                    self.writer.add_scalar("%s_%s" % (split, k), v, step)
 
     def close(self):
         self.writer.flush()
