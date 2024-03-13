@@ -2,7 +2,7 @@
 #
 # Licensed under the NVIDIA Source Code License [see LICENSE for details].
 
-from rvt.libs.peract.helpers.custom_rlbench_env import CustomMultiTaskRLBenchEnv
+from peract_helpers.custom_rlbench_env import CustomMultiTaskRLBenchEnv
 
 
 class CustomMultiTaskRLBenchEnv2(CustomMultiTaskRLBenchEnv):
